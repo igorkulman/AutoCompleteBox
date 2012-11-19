@@ -1,0 +1,39 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AutoCompleteBox">
+
+    <Style TargetType="local:AutoCompleteBox">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:AutoCompleteBox">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+
+                        <Grid x:Name="spContainer"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBox x:Name="tbChild"
+                                     HorizontalAlignment="Stretch"
+                                     Grid.Row="0" />
+                            <ListBox x:Name="lbChild"
+                                     HorizontalAlignment="Stretch"
+                                     MaxHeight="100"
+                                     ItemsSource="{TemplateBinding ItemsSource}"
+                                     Visibility="Collapsed"
+                                     Margin="-2, 0"
+                                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                     Grid.Row="1" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
