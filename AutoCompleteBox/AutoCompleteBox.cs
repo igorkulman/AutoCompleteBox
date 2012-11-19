@@ -104,7 +104,7 @@ namespace AutoCompleteBox
             if (!ItemsSource.Contains(tb.Text))
             {
                 var sel = (from d in this.ItemsSource where d.ToLower().StartsWith(this.tb.Text.ToLower()) select d);
-                tb.Text = sel.FirstOrDefault();
+                tb.Text = sel.FirstOrDefault() ?? String.Empty;
             }
         }
 
