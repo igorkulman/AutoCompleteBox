@@ -44,7 +44,11 @@ namespace AutoCompleteBox
                 var keys = Observable.FromEventPattern<KeyRoutedEventArgs>(tb, "KeyUp").Throttle(TimeSpan.FromSeconds(0.5), CoreDispatcherScheduler.Current);
                 keys.Subscribe(evt =>
                 {
-
+                    if (evt.EventArgs.Key == Windows.System.VirtualKey.Enter)
+                    {
+                        HideAndSelectFirst();                        
+                        return;
+                    }
 
                     if (!isShowing) return;
 
@@ -86,6 +90,11 @@ namespace AutoCompleteBox
 
         void tb_LostFocus(object sender, RoutedEventArgs e)
         {
+            HideAndSelectFirst();
+        }
+
+        private void HideAndSelectFirst()
+        {
             isShowing = false;
             this.lb.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
 
@@ -109,37 +118,16 @@ namespace AutoCompleteBox
 
         public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(ICollection<string>), typeof(AutoCompleteBox), new PropertyMetadata(null));
 
-        void tb_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (!isShowing) return;
-
-            this.lb.SelectionChanged -= lb_SelectionChanged;
-
-            this.lb.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-
-            if (String.IsNullOrWhiteSpace(this.tb.Text) || this.ItemsSource == null || this.ItemsSource.Count == 0)
-                return;
-
-            var sel = (from d in this.ItemsSource where d.ToLower().StartsWith(this.tb.Text.ToLower()) select d);
-
-            if (sel != null && sel.Count() > 0)
-            {
-                this.lb.ItemsSource = sel;
-                this.lb.Visibility = Windows.UI.Xaml.Visibility.Visible;
-
-                this.lb.SelectionChanged += lb_SelectionChanged;
-            }
-
-            //tb.TextChanged += tb_TextChanged;
-        }
+        
+        
 
         void lb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.tb.TextChanged -= tb_TextChanged;
+            //this.tb.TextChanged -= tb_TextChanged;
 
             this.tb.Text = (string)this.lb.SelectedValue;
 
-            this.tb.TextChanged += tb_TextChanged;
+            //this.tb.TextChanged += tb_TextChanged;
 
             this.lb.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
