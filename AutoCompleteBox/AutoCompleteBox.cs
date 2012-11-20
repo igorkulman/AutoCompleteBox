@@ -9,6 +9,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using WinRTXamlToolkit.Controls;
 
 // The Templated Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234235
 
@@ -16,7 +17,7 @@ namespace AutoCompleteBox
 {
     public sealed class AutoCompleteBox : Control
     {
-        TextBox tb = null;
+        WatermarkTextBox tb = null;
         ListBox lb = null;
         Grid g = null;
         bool isShowing = true;
@@ -32,7 +33,7 @@ namespace AutoCompleteBox
         {
             base.OnApplyTemplate();
 
-            this.tb = GetTemplateChild("tbChild") as TextBox;
+            this.tb = GetTemplateChild("tbChild") as WatermarkTextBox;
             this.lb = GetTemplateChild("lbChild") as ListBox;
 
             this.g = GetTemplateChild("spContainer") as Grid;
@@ -118,6 +119,13 @@ namespace AutoCompleteBox
 
         public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(ICollection<string>), typeof(AutoCompleteBox), new PropertyMetadata(null));
 
+        public static readonly DependencyProperty WatermarkTextProperty = DependencyProperty.Register("WatermarkText", typeof(string), typeof(AutoCompleteBox), new PropertyMetadata(string.Empty));
+
+        public string WatermarkText
+        {
+            get { return (string)GetValue(WatermarkTextProperty); }
+            set { SetValue(WatermarkTextProperty, value); }
+        }
         
         
 
