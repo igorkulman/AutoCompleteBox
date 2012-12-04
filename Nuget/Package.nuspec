@@ -1,19 +1,18 @@
 <?xml version="1.0"?>
-<package >
+<package>
   <metadata>
     <id>AutoCompleteBoxWinRT</id>
-    <version>1.0.0</version>
+    <version>1.0.0.1</version>
     <authors>Igor Kulman</authors>
     <owners>Igor Kulman</owners>
-    <projectUrl>https://bitbucket.org/igorkulman/autocompletebox</projectUrl>
-    <!--<iconUrl>http://www.eyecatch.no/favicon.ico</iconUrl>-->
+    <projectUrl>https://bitbucket.org/igorkulman/autocompletebox</projectUrl>    
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
-      AutoCompleteBox for WinRT built using Reactive Extensions
+      AutoCompleteBox for WinRT built using Reactive Extensions. For more info see http://code.kulman.sk/autocompletebox/wiki/Home
     </description>
     <releaseNotes>
     </releaseNotes>
-    <copyright>Copyright Igor Kulman 2012</copyright>
+    <copyright>Copyright 2012 Igor Kulman</copyright>
     <tags></tags>
     <dependencies>
       <dependency id="Rx-Core" version="2.0.21114"  />
