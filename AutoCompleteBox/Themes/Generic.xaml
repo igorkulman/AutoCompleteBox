@@ -20,7 +20,7 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <controls:WatermarkTextBox x:Name="tbChild"
+                            <controls:WatermarkTextBox x:Name="tbChild" Text="{TemplateBinding Text}"
                                                        WatermarkText="{TemplateBinding WatermarkText}"
                                                        HorizontalAlignment="Stretch"
                                                        Grid.Row="0" />
