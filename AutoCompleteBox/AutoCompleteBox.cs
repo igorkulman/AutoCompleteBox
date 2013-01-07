@@ -52,6 +52,8 @@ namespace AutoCompleteBox
         }
         #endregion
 
+        public Func<string, string, bool> SearchFunction = (itemInList, typedText) => { return itemInList.ToLower().RemoveDiacritics().StartsWith(typedText.ToLower().RemoveDiacritics()); };
+
         public AutoCompleteBox()
         {
             this.DefaultStyleKey = typeof(AutoCompleteBox);
@@ -88,7 +90,8 @@ namespace AutoCompleteBox
                     if (String.IsNullOrWhiteSpace(this.tb.Text) || this.ItemsSource == null || this.ItemsSource.Count == 0)
                         return;
 
-                    var sel = (from d in this.ItemsSource where d.ToLower().RemoveDiacritics().StartsWith(this.tb.Text.ToLower().RemoveDiacritics()) select d);
+                    //var sel = (from d in this.ItemsSource where d.ToLower().RemoveDiacritics().StartsWith(this.tb.Text.ToLower().RemoveDiacritics()) select d);
+                    var sel = (from d in this.ItemsSource where SearchFunction(d,this.tb.Text) select d);
 
                     if (sel != null && sel.Count() > 0)
                     {
