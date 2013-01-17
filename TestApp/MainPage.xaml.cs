@@ -31,9 +31,6 @@ namespace TestApp
             this.DataContext = _model;
             var items = new List<string>() { "a", "ab","abc", "b", "c", "d", "e", "f", "g" };
             ABBox.ItemsSource = items;
-
-            //custom search function
-            ABBox.SearchFunction = (itemInList, typedText) => { return itemInList.ToLower().Contains(typedText.ToLower()); };
         }
 
         /// <summary>

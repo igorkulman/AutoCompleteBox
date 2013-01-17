@@ -23,6 +23,21 @@ namespace TestApp.Classes
         }
         private string _Text;
 
+        public Func<string,string,bool> SearchFunction
+        {
+            get { return _SearchFunction; }
+            set
+            {
+                if (_SearchFunction != value)
+                {
+                    _SearchFunction = value;
+                    NotifyPropertyChanged("SearchFunction");
+                }
+            }
+        }
+        private Func<string,string,bool> _SearchFunction;
+        
+
         public ICommand TestCommand
         {
             get
@@ -35,6 +50,11 @@ namespace TestApp.Classes
 
                 });
             }
+        }
+
+        public TestViewModel()
+        {
+            SearchFunction = (itemInList, typedText) => { return itemInList.ToLower().Contains(typedText.ToLower()); };
         }
     }
 }
