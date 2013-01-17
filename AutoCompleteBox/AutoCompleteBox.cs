@@ -28,6 +28,7 @@ namespace AutoCompleteBox
         public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(ICollection<string>), typeof(AutoCompleteBox), new PropertyMetadata(null));
         public static readonly DependencyProperty WatermarkTextProperty = DependencyProperty.Register("WatermarkText", typeof(string), typeof(AutoCompleteBox), new PropertyMetadata(string.Empty));
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(AutoCompleteBox), new PropertyMetadata(string.Empty));
+        public static readonly DependencyProperty SearchFunctionProperty = DependencyProperty.Register("SearchFunction", typeof(Func<string, string, bool>), typeof(AutoCompleteBox), new PropertyMetadata(new Func<string, string, bool>((itemInList, typedText) => { return itemInList.ToLower().RemoveDiacritics().StartsWith(typedText.ToLower().RemoveDiacritics()); })));
         #endregion
 
         #region properties
@@ -50,9 +51,15 @@ namespace AutoCompleteBox
             get { return (string)GetValue(WatermarkTextProperty); }
             set { SetValue(WatermarkTextProperty, value); }
         }
+
+        public Func<string, string, bool> SearchFunction
+        {
+            get { return (Func<string, string, bool>)GetValue(SearchFunctionProperty); }
+            set { SetValue(SearchFunctionProperty, value); }
+        }
         #endregion
 
-        public Func<string, string, bool> SearchFunction = (itemInList, typedText) => { return itemInList.ToLower().RemoveDiacritics().StartsWith(typedText.ToLower().RemoveDiacritics()); };
+        //public Func<string, string, bool> SearchFunction = (itemInList, typedText) => { return itemInList.ToLower().RemoveDiacritics().StartsWith(typedText.ToLower().RemoveDiacritics()); };
 
         public AutoCompleteBox()
         {
