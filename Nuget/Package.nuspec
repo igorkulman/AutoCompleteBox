@@ -2,11 +2,12 @@
 <package>
   <metadata>
     <id>AutoCompleteBoxWinRT</id>
-    <version>1.1.0.2</version>
+    <version>1.1.0.3</version>
     <authors>Igor Kulman</authors>
     <owners>Igor Kulman</owners>
-    <projectUrl>https://github.com/igorkulman/AutoCompleteBox</projectUrl>    
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://github.com/igorkulman/AutoCompleteBox</projectUrl>
+    <licenseUrl>https://raw.github.com/igorkulman/AutoCompleteBox/master/LICENSE.txt</licenseUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>
       AutoCompleteBox for WinRT built using Reactive Extensions. For more info see https://github.com/igorkulman/AutoCompleteBox
     </description>
