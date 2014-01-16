@@ -1,12 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using WinRTXamlToolkit.Controls;
@@ -65,6 +64,8 @@ namespace AutoCompleteBox
         {
             this.DefaultStyleKey = typeof(AutoCompleteBox);
         }
+
+        public event Action<String> ItemChosen;
        
         protected override void OnApplyTemplate()
         {
@@ -92,7 +93,7 @@ namespace AutoCompleteBox
 
                     this.lb.SelectionChanged -= lb_SelectionChanged;
 
-                    this.lb.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    this.lb.Visibility = Visibility.Collapsed;
 
                     if (String.IsNullOrWhiteSpace(this.tb.Text) || this.ItemsSource == null || this.ItemsSource.Count == 0)
                         return;
@@ -103,7 +104,7 @@ namespace AutoCompleteBox
                     if (sel != null && sel.Count() > 0)
                     {
                         this.lb.ItemsSource = sel;
-                        this.lb.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                        this.lb.Visibility = Visibility.Visible;
 
                         this.lb.SelectionChanged += lb_SelectionChanged;
                     }
@@ -136,7 +137,7 @@ namespace AutoCompleteBox
             if (String.IsNullOrWhiteSpace(this.tb.Text) || this.ItemsSource == null || this.ItemsSource.Count == 0)
                 return;
 
-            if (!ItemsSource.Contains(tb.Text))
+            if (!ItemsSource.Contains(tb.Text, new Compare()))
             {
                 var sel = (from d in this.ItemsSource where d.ToLower().StartsWith(this.tb.Text.ToLower()) select d);
                 Text = sel.FirstOrDefault() ?? String.Empty;
@@ -144,17 +145,37 @@ namespace AutoCompleteBox
             else
             {
                 Text = tb.Text;
+                onItemChosen();
             }
         }
-
-      
-        
         
 
         void lb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.tb.Text = (string)this.lb.SelectedValue;
             this.lb.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            onItemChosen();
+        }
+
+        private void onItemChosen()
+        {
+            if (ItemChosen != null)
+                ItemChosen(tb.Text);
+        }
+
+        class Compare : IEqualityComparer<String>
+        {
+            public bool Equals(String x, String y)
+            {
+                if (x.ToLower() == y.ToLower())
+                    return true;
+                else 
+                    return false;
+            }
+            public int GetHashCode(String codeh)
+            {
+                return 0;
+            }
         }
     }
 }
