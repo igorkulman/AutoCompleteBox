@@ -65,7 +65,7 @@ namespace AutoCompleteBox
             this.DefaultStyleKey = typeof(AutoCompleteBox);
         }
 
-        public event Action<String> itemChosenEvent;
+        public event Action<String> ItemChosen;
        
         protected override void OnApplyTemplate()
         {
@@ -159,7 +159,8 @@ namespace AutoCompleteBox
 
         private void onItemChosen()
         {
-            itemChosenEvent(tb.Text);
+            if (ItemChosen != null)
+                ItemChosen(tb.Text);
         }
 
         class Compare : IEqualityComparer<String>
