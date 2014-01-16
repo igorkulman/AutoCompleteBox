@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 using WinRTXamlToolkit.Controls;
 
 // The Templated Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234235
@@ -63,7 +65,7 @@ namespace AutoCompleteBox
             this.DefaultStyleKey = typeof(AutoCompleteBox);
         }
 
-        public event EventHandler itemChosen;
+        public event Action<String> itemChosenEvent;
        
         protected override void OnApplyTemplate()
         {
@@ -157,8 +159,7 @@ namespace AutoCompleteBox
 
         private void onItemChosen()
         {
-            ItemEventArgs args = new ItemEventArgs(tb.Text);
-            itemChosen(this, args);
+            itemChosenEvent(tb.Text);
         }
 
         class Compare : IEqualityComparer<String>
@@ -174,15 +175,6 @@ namespace AutoCompleteBox
             {
                 return 0;
             }
-        }
-
-        public class ItemEventArgs : EventArgs
-        {
-            public ItemEventArgs(String item)
-            {
-                this.item = item;
-            }
-            public String item { get; set; }
         }
     }
 }
