@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>AutoCompleteBoxWinRT</id>
-    <version>1.1.0.3</version>
+    <version>1.2.0.0</version>
     <authors>Igor Kulman</authors>
     <owners>Igor Kulman</owners>
     <projectUrl>https://github.com/igorkulman/AutoCompleteBox</projectUrl>
@@ -13,7 +13,7 @@
     </description>
     <releaseNotes>
     </releaseNotes>
-    <copyright>Copyright 2013 Igor Kulman</copyright>
+    <copyright>Copyright 2013-2014 Igor Kulman</copyright>
     <tags></tags>
     <dependencies>
       <dependency id="Rx-Core" version="2.1.30214.0"  />
