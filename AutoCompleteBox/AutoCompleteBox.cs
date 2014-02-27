@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
@@ -24,16 +25,16 @@ namespace AutoCompleteBox
         #endregion
 
         #region dependency properties
-        public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(ICollection<string>), typeof(AutoCompleteBox), new PropertyMetadata(null));
+        public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(ObservableCollection<string>), typeof(AutoCompleteBox), new PropertyMetadata(null));
         public static readonly DependencyProperty WatermarkTextProperty = DependencyProperty.Register("WatermarkText", typeof(string), typeof(AutoCompleteBox), new PropertyMetadata(string.Empty));
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(AutoCompleteBox), new PropertyMetadata(string.Empty));
         public static readonly DependencyProperty SearchFunctionProperty = DependencyProperty.Register("SearchFunction", typeof(Func<string, string, bool>), typeof(AutoCompleteBox), new PropertyMetadata(new Func<string, string, bool>((itemInList, typedText) => { return itemInList.ToLower().RemoveDiacritics().StartsWith(typedText.ToLower().RemoveDiacritics()); })));
         #endregion
 
         #region properties
-        public ICollection<string> ItemsSource
+        public ObservableCollection<string> ItemsSource
         {
-            get { return (ICollection<string>)GetValue(ItemsSourceProperty); }
+            get { return (ObservableCollection<string>)GetValue(ItemsSourceProperty); }
             set { SetValue(ItemsSourceProperty, value); }
         }
 
