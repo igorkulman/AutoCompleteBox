@@ -9,7 +9,7 @@
     mc:Ignorable="d">
 
     <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
-        <ab:AutoCompleteBox Name="ABBox" Text="{Binding Text, Mode=TwoWay}" WatermarkText="Type something" SearchFunction="{Binding SearchFunction}" />
+        <ab:AutoCompleteBox Text="{Binding Text, Mode=TwoWay}" WatermarkText="Type something" ItemsSource="{Binding Items}" SearchFunction="{Binding SearchFunction}" />
         
         <Button Content="Test" VerticalAlignment="Top" Margin="0,100,0,0" Command="{Binding TestCommand}" />
     </Grid>

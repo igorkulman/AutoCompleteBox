@@ -22,15 +22,11 @@ namespace TestApp
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private TestViewModel _model;
-
         public MainPage()
         {
             this.InitializeComponent();
-            _model = new TestViewModel();
-            this.DataContext = _model;
-            var items = new List<string>() { "a", "ab","abc", "b", "c", "d", "e", "f", "g" };
-            ABBox.ItemsSource = items;
+            var model = new TestViewModel();
+            this.DataContext = model;           
         }
 
         /// <summary>

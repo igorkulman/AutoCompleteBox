@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,33 +10,35 @@ namespace TestApp.Classes
 {
     public class TestViewModel: BaseViewModel
     {
+        public ObservableCollection<string> Items { get; private set; } 
+
         public string Text
         {
-            get { return _Text; }
+            get { return _text; }
             set
             {
-                if (_Text != value)
+                if (_text != value)
                 {
-                    _Text = value;
+                    _text = value;
                     NotifyPropertyChanged("Text");
                 }
             }
         }
-        private string _Text;
+        private string _text;
 
         public Func<string,string,bool> SearchFunction
         {
-            get { return _SearchFunction; }
+            get { return _searchFunction; }
             set
             {
-                if (_SearchFunction != value)
+                if (_searchFunction != value)
                 {
-                    _SearchFunction = value;
+                    _searchFunction = value;
                     NotifyPropertyChanged("SearchFunction");
                 }
             }
         }
-        private Func<string,string,bool> _SearchFunction;
+        private Func<string,string,bool> _searchFunction;
         
 
         public ICommand TestCommand
@@ -54,7 +57,9 @@ namespace TestApp.Classes
 
         public TestViewModel()
         {
-            SearchFunction = (itemInList, typedText) => { return itemInList.ToLower().Contains(typedText.ToLower()); };
+            SearchFunction = (itemInList, typedText) => itemInList.ToLower().Contains(typedText.ToLower());
+            Items = new ObservableCollection<string>(new[] { "a", "ab", "abc", "b", "c", "d", "e", "f", "g" });
+
         }
     }
 }
