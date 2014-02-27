@@ -1,14 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
-using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using WinRTXamlToolkit.Controls;
 
 // The Templated Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234235
@@ -17,7 +14,7 @@ namespace AutoCompleteBox
 {
     public sealed class AutoCompleteBox : Control
     {
-        #region fields        
+        #region fields
         WatermarkTextBox tb = null;
         ListBox lb = null;
         Grid g = null;
@@ -44,8 +41,6 @@ namespace AutoCompleteBox
             set { SetValue(TextProperty, value); }
         }
 
-
-
         public string WatermarkText
         {
             get { return (string)GetValue(WatermarkTextProperty); }
@@ -67,115 +62,97 @@ namespace AutoCompleteBox
         }
 
         public event Action<String> ItemChosen;
-       
+
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
 
-            this.tb = GetTemplateChild("tbChild") as WatermarkTextBox;
-            this.lb = GetTemplateChild("lbChild") as ListBox;
+            tb = GetTemplateChild("tbChild") as WatermarkTextBox;
+            lb = GetTemplateChild("lbChild") as ListBox;
+            g = GetTemplateChild("spContainer") as Grid;
 
-            this.g = GetTemplateChild("spContainer") as Grid;
+            if (tb == null || lb == null || g == null) return;
 
-            if (tb != null && this.lb != null)
+
+            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled) return;
+
+            var keys = Observable.FromEventPattern<KeyRoutedEventArgs>(tb, "KeyUp").Throttle(TimeSpan.FromSeconds(0.5), CoreDispatcherScheduler.Current);
+            keys.Subscribe(evt =>
             {
-                //tb.TextChanged += tb_TextChanged;
-                if (Windows.ApplicationModel.DesignMode.DesignModeEnabled) return;
-                var keys = Observable.FromEventPattern<KeyRoutedEventArgs>(tb, "KeyUp").Throttle(TimeSpan.FromSeconds(0.5), CoreDispatcherScheduler.Current);
-                keys.Subscribe(evt =>
-                {
-                    if (evt.EventArgs.Key == Windows.System.VirtualKey.Enter)
-                    {
-                        HideAndSelectFirst();                        
-                        return;
-                    }
-
-                    if (!isShowing) return;
-
-                    this.lb.SelectionChanged -= lb_SelectionChanged;
-
-                    this.lb.Visibility = Visibility.Collapsed;
-
-                    if (String.IsNullOrWhiteSpace(this.tb.Text) || this.ItemsSource == null || this.ItemsSource.Count == 0)
-                        return;
-
-                    //var sel = (from d in this.ItemsSource where d.ToLower().RemoveDiacritics().StartsWith(this.tb.Text.ToLower().RemoveDiacritics()) select d);
-                    var sel = (from d in this.ItemsSource where SearchFunction(d,this.tb.Text) select d);
-
-                    if (sel != null && sel.Count() > 0)
-                    {
-                        this.lb.ItemsSource = sel;
-                        this.lb.Visibility = Visibility.Visible;
-
-                        this.lb.SelectionChanged += lb_SelectionChanged;
-                    }
-                });
-
-                tb.LostFocus += (s, e) =>
+                if (evt.EventArgs.Key == Windows.System.VirtualKey.Enter)
                 {
                     HideAndSelectFirst();
-                };
-                tb.GotFocus += (s, e) =>
+                    return;
+                }
+
+                if (!isShowing) return;
+
+                lb.SelectionChanged -= lb_SelectionChanged;
+                lb.Visibility = Visibility.Collapsed;
+
+                if (String.IsNullOrWhiteSpace(this.tb.Text) || this.ItemsSource == null || this.ItemsSource.Count == 0)
+                    return;
+
+                //var sel = (from d in this.ItemsSource where d.ToLower().RemoveDiacritics().StartsWith(this.tb.Text.ToLower().RemoveDiacritics()) select d);
+                var sel = (from d in this.ItemsSource where SearchFunction(d, this.tb.Text) select d);
+
+                if (sel.Any())
                 {
-                    isShowing = true;
-                };
-                
+                    lb.ItemsSource = sel;
+                    lb.Visibility = Visibility.Visible;
+                    lb.SelectionChanged += lb_SelectionChanged;
+                }
+            });
+
+            tb.LostFocus += (s, e) => HideAndSelectFirst();
+            tb.GotFocus += (s, e) =>
+            {
+                isShowing = true;
+            };
+
+            if (ItemsSource != null)
+            {
+                lb.ItemsSource = ItemsSource;
             }
 
-            if (this.ItemsSource != null)
-                this.lb.ItemsSource = ItemsSource;
-
-            this.g.MaxHeight = this.MaxHeight;
+            g.MaxHeight = MaxHeight;
         }
-           
-      
+
+
 
         private void HideAndSelectFirst()
         {
             isShowing = false;
-            this.lb.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            lb.Visibility = Visibility.Collapsed;
 
-            if (String.IsNullOrWhiteSpace(this.tb.Text) || this.ItemsSource == null || this.ItemsSource.Count == 0)
+            if (String.IsNullOrWhiteSpace(tb.Text) || ItemsSource == null || ItemsSource.Count == 0)
                 return;
 
             if (!ItemsSource.Contains(tb.Text, new Compare()))
             {
-                var sel = (from d in this.ItemsSource where d.ToLower().StartsWith(this.tb.Text.ToLower()) select d);
+                var sel = (from d in ItemsSource where d.ToLower().StartsWith(tb.Text.ToLower()) select d);
                 Text = sel.FirstOrDefault() ?? String.Empty;
             }
             else
             {
                 Text = tb.Text;
-                onItemChosen();
+                OnItemChosen();
             }
         }
-        
+
 
         void lb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.tb.Text = (string)this.lb.SelectedValue;
             this.lb.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-            onItemChosen();
+            OnItemChosen();
         }
 
-        private void onItemChosen()
+        private void OnItemChosen()
         {
             if (ItemChosen != null)
+            {
                 ItemChosen(tb.Text);
-        }
-
-        class Compare : IEqualityComparer<String>
-        {
-            public bool Equals(String x, String y)
-            {
-                if (x.ToLower() == y.ToLower())
-                    return true;
-                else 
-                    return false;
-            }
-            public int GetHashCode(String codeh)
-            {
-                return 0;
             }
         }
     }
