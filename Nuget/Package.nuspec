@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>AutoCompleteBoxWinRT</id>
-    <version>1.2.0.0</version>
+    <version>1.2.0.1</version>
     <authors>Igor Kulman</authors>
     <owners>Igor Kulman</owners>
     <projectUrl>https://github.com/igorkulman/AutoCompleteBox</projectUrl>
