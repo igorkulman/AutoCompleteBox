@@ -20,7 +20,7 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <controls:WatermarkTextBox x:Name="tbChild" Text="{TemplateBinding Text}"
+                        <controls:WatermarkTextBox x:Name="tbChild" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text, Mode=TwoWay}"
                                                        WatermarkText="{TemplateBinding WatermarkText}"
                                                        HorizontalAlignment="Stretch"
                                                        Grid.Row="0" />
