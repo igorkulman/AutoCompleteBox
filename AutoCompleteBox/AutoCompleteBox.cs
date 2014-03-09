@@ -130,8 +130,8 @@ namespace AutoCompleteBox
 
             if (!ItemsSource.Contains(tb.Text, new Compare()))
             {
-                var sel = (from d in ItemsSource where d.ToLower().StartsWith(tb.Text.ToLower()) select d);
-                Text = sel.FirstOrDefault() ?? String.Empty;
+                var sel = (from d in ItemsSource where SearchFunction(d, this.tb.Text) select d);
+                Text = sel.FirstOrDefault() ?? tb.Text;
             }
             else
             {
