@@ -26,8 +26,8 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\AutoCompleteBox\bin\Release\Themes\Generic.xaml" target="lib\winrt\AutoCompleteBox\Themes\Generic.xaml" />
-    <file src="..\AutoCompleteBox\bin\Release\AutoCompleteBox.dll" target="lib\winrt\AutoCompleteBox.dll" />
-    <file src="..\AutoCompleteBox\bin\Release\AutoCompleteBox.pri" target="lib\winrt\AutoCompleteBox.pri" />
+    <file src="Themes\Generic.xaml" target="lib\winrt\AutoCompleteBox\Themes\Generic.xaml" />
+    <file src="AutoCompleteBox.dll" target="lib\winrt\AutoCompleteBox.dll" />
+    <file src="AutoCompleteBox.pri" target="lib\winrt\AutoCompleteBox.pri" />
   </files>
 </package>

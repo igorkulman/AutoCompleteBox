@@ -166,3 +166,5 @@ pip-log.txt
 .DS_Store
 /Profesia/AppPackages
 /Nuget/*.nupkg
+/tools/FAKE
+/packaging
