@@ -24,7 +24,8 @@ Target "Build" (fun _ ->
 
 Target "CreateNugetPackage" (fun _ ->    
     NuGet (fun p -> 
-        {p with                            
+        {p with                  
+            Project = "AutoCompleteBoxWinRT"          
             OutputPath = packagingRoot
             WorkingDir = buildDir
             Version = packagesVersion
@@ -36,6 +37,7 @@ Target "CreateNugetPackage" (fun _ ->
                  "Rx-Linq", GetPackageVersion "./packages/" "Rx-Linq"
                  "Rx-PlatformServices", GetPackageVersion "./packages/" "Rx-PlatformServices"
                  "winrtxamltoolkit", GetPackageVersion "./packages/" "winrtxamltoolkit"]
+            Publish = true
             }) "autocompletebox.nuspec"
 )
 
