@@ -15,19 +15,11 @@
     </releaseNotes>
     <copyright>Copyright 2013-2014 Igor Kulman</copyright>
     <tags></tags>
-    <dependencies>
-      <dependency id="Rx-Core" version="2.1.30214.0"  />
-      <dependency id="Rx-Interfaces" version="2.1.30214.0"  />
-      <dependency id="Rx-Linq" version="2.1.30214.0"  />
-      <dependency id="Rx-Main" version="2.1.30214.0"  />
-      <dependency id="Rx-PlatformServices" version="2.1.30214.0"  />      
-      <dependency id="Rx-XAML" version="2.1.30214.0"  />
-      <dependency id="winrtxamltoolkit" version="1.3.5.3"  />    
-    </dependencies>
+    @dependencies@
   </metadata>
   <files>
-    <file src="Themes\Generic.xaml" target="lib\winrt\AutoCompleteBox\Themes\Generic.xaml" />
-    <file src="AutoCompleteBox.dll" target="lib\winrt\AutoCompleteBox.dll" />
-    <file src="AutoCompleteBox.pri" target="lib\winrt\AutoCompleteBox.pri" />
+    <file src="Themes\Generic.xaml" target="lib\netcore45\AutoCompleteBox\Themes\Generic.xaml" />
+    <file src="AutoCompleteBox.dll" target="lib\netcore45\AutoCompleteBox.dll" />
+    <file src="AutoCompleteBox.pri" target="lib\netcore45\AutoCompleteBox.pri" />
   </files>
 </package>

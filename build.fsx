@@ -28,6 +28,14 @@ Target "CreateNugetPackage" (fun _ ->
             OutputPath = packagingRoot
             WorkingDir = buildDir
             Version = packagesVersion
+            Dependencies =
+                ["Rx-Main", GetPackageVersion "./packages/" "Rx-Main"
+                 "Rx-Core", GetPackageVersion "./packages/" "Rx-Core"
+                 "Rx-XAML", "2.1.30214.0"
+                 "Rx-Interfaces", GetPackageVersion "./packages/" "Rx-Interfaces"
+                 "Rx-Linq", GetPackageVersion "./packages/" "Rx-Linq"
+                 "Rx-PlatformServices", GetPackageVersion "./packages/" "Rx-PlatformServices"
+                 "winrtxamltoolkit", GetPackageVersion "./packages/" "winrtxamltoolkit"]
             }) "autocompletebox.nuspec"
 )
 
