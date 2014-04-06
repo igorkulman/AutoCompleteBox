@@ -37,7 +37,7 @@ Target "CreateNugetPackage" (fun _ ->
                  "Rx-Linq", GetPackageVersion "./packages/" "Rx-Linq"
                  "Rx-PlatformServices", GetPackageVersion "./packages/" "Rx-PlatformServices"
                  "winrtxamltoolkit", GetPackageVersion "./packages/" "winrtxamltoolkit"]
-            Publish = true
+            Publish = false
             }) "autocompletebox.nuspec"
 )
 
