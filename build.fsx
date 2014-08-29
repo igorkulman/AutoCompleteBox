@@ -1,15 +1,17 @@
 // include Fake lib
 #r @"tools\FAKE\tools\FakeLib.dll"
+#load "packages/SourceLink.Fake.0.3.4/tools/SourceLink.fsx"
 open Fake
+open SourceLink
  
 RestorePackages()
 
 // Properties
-let buildDir = @".\build\"
+let buildDir = "./AutoCompleteBox/bin/Release"
 let testDir  = @".\test\"
 let packagesDir = @".\packages"
 let packagingRoot = "./packaging/"
-let packagesVersion = "1.2.0.3"
+let packagesVersion = "1.2.0.4"
 
 // Targets
 Target "Clean" (fun _ ->
@@ -41,6 +43,17 @@ Target "CreateNugetPackage" (fun _ ->
             }) "autocompletebox.nuspec"
 )
 
+Target "SourceLink" (fun _ ->            
+        use repo = new GitRepo(__SOURCE_DIRECTORY__)
+        let proj = VsProj.LoadRelease "AutoCompleteBox/AutoCompleteBox.csproj"    
+        logfn "source linking %s" proj.OutputFilePdb
+        let files = proj.Compiles -- "**/AssemblyInfo.cs" -- "**/xamltypeinfo.g.cs"        
+        repo.VerifyChecksums files
+        proj.VerifyPdbChecksums files
+        proj.CreateSrcSrv "https://raw.github.com/igorkulman/AutoCompleteBox/{0}/%var2%" repo.Revision (repo.Paths files)
+        Pdbstr.exec proj.OutputFilePdb proj.OutputFilePdbSrcSrv    
+)
+
 Target "Default" (fun _ ->
     trace "Build completed"
 )
@@ -48,6 +61,7 @@ Target "Default" (fun _ ->
 // Dependencies
 "Clean"  
   ==> "Build"
+  ==> "SourceLink"
   ==> "CreateNugetPackage"
   ==> "Default"
  
