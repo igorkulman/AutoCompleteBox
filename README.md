@@ -4,6 +4,8 @@ There is no AutoCompleteBox control that can be used when building Windows Store
 
 The AutoCompleteBox uses WinRT XAML Toolkit to show the watermark andReactive Extensions so the users does not need to press enter, the results will show after they stop typing for a second.
 
-Installation using Nuget: 
+## Installation
 
-    Install-Package AutoCompleteBoxWinRT
+[![NuGet version](http://img.shields.io/nuget/v/AutoCompleteBoxWinRT.svg?style=flat)](https://nuget.org/packages/Nancy.LightningCache.2)  [![NuGet downloads](http://img.shields.io/nuget/dt/AutoCompleteBoxWinRT.svg?style=flat)](https://nuget.org/packages/AutoCompleteBoxWinRT)
+
+    PM> Install-Package AutoCompleteBoxWinRT
