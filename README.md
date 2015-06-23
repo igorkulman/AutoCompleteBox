@@ -6,6 +6,6 @@ The AutoCompleteBox uses WinRT XAML Toolkit to show the watermark andReactive Ex
 
 ## Installation
 
-[![NuGet version](http://img.shields.io/nuget/v/AutoCompleteBoxWinRT.svg?style=flat)](https://nuget.org/packages/Nancy.LightningCache.2)  [![NuGet downloads](http://img.shields.io/nuget/dt/AutoCompleteBoxWinRT.svg?style=flat)](https://nuget.org/packages/AutoCompleteBoxWinRT)
+[![NuGet version](http://img.shields.io/nuget/v/AutoCompleteBoxWinRT.svg?style=flat)](https://nuget.org/packages/AutoCompleteBoxWinRT)  [![NuGet downloads](http://img.shields.io/nuget/dt/AutoCompleteBoxWinRT.svg?style=flat)](https://nuget.org/packages/AutoCompleteBoxWinRT)
 
     PM> Install-Package AutoCompleteBoxWinRT
